@@ -6,7 +6,7 @@ let simulatedSongs = [
     id: "sim-song-1",
     title: "Midnight City",
     artist: "M83",
-    image: "https://i.scdn.co/image/ab67616d0000b27329596489437b6058e575775c",
+    image: "https://placehold.co/300x300/1DB954/white?text=Music",
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     albumId: null,
     duration: 240

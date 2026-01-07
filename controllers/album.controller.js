@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 // In-Memory Store for Simulation Mode
 let simulatedAlbums = [
-    { id: "sim-alb-1", title: "Essentials", artist: "Various Artists", desc: "Must-have tracks", image: "https://i.scdn.co/image/ab67616d0000b27329596489437b6058e575775c", bgColor: "#535353" }
+    { id: "sim-alb-1", title: "Essentials", artist: "Various Artists", desc: "Must-have tracks", image: "https://placehold.co/300x300/1DB954/white?text=Essentials", bgColor: "#535353" }
 ];
 
 export const addAlbum = async (req, res) => {
