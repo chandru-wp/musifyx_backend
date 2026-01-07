@@ -12,49 +12,25 @@ import { upload, uploadImage, uploadAudio, uploadVideo } from '../utils/cloudina
 const router = express.Router();
 
 // Upload image
+// Upload image
 router.post('/image', protect, adminOnly, upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ msg: 'No file uploaded' });
         }
 
-        const result = await uploadImage(req.file.buffer);
+        // Convert image to Base64 to store directly in DB
+        const b64 = req.file.buffer.toString('base64');
+        const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+
         res.json({
             success: true,
-            url: result.secure_url,
-            publicId: result.public_id
+            url: dataURI,
+            publicId: "db-" + Date.now()
         });
     } catch (error) {
         console.error('Image upload error:', error);
-
-        // Fallback to local storage if Cloudinary fails
-        console.error('❌ Cloudinary failed, trying local storage:', error.message);
-
-        try {
-            const fileName = `img-${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(req.file.originalname)}`;
-            const localFilePath = path.join(uploadsDir, 'images', fileName);
-
-            // Ensure directory exists
-            if (!fs.existsSync(path.join(uploadsDir, 'images'))) {
-                fs.mkdirSync(path.join(uploadsDir, 'images'), { recursive: true });
-            }
-
-            fs.writeFileSync(localFilePath, req.file.buffer);
-            const localUrl = `${req.protocol}://${req.get('host')}/uploads/images/${fileName}`;
-
-            return res.json({
-                success: true,
-                url: localUrl,
-                publicId: "local-" + Date.now()
-            });
-        } catch (localErr) {
-            console.error('❌ Local save failed:', localErr);
-            return res.json({
-                success: true,
-                url: "https://placehold.co/500x500/1DB954/white?text=Upload+Fallback",
-                publicId: "fallback-img-" + Date.now()
-            });
-        }
+        res.status(500).json({ msg: 'Failed to process image', error: error.message });
     }
 });
 
