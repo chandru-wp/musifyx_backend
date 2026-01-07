@@ -1,9 +1,7 @@
 import prisma from "../prisma.js";
 
 // In-Memory Store for Simulation Mode
-let simulatedAlbums = [
-    { id: "sim-alb-1", title: "Essentials", artist: "Various Artists", desc: "Must-have tracks", image: "https://placehold.co/300x300/1DB954/white?text=Essentials", bgColor: "#535353" }
-];
+let simulatedAlbums = [];
 
 export const addAlbum = async (req, res) => {
     const { title, artist, desc, image, bgColor } = req.body;
@@ -14,26 +12,17 @@ export const addAlbum = async (req, res) => {
         });
         res.json(album);
     } catch (error) {
-        console.log("DB Error adding album, falling back to simulation:", error.message);
-        const newAlbum = {
-            id: "sim-alb-" + Math.random().toString(36).substr(2, 9),
-            title,
-            artist,
-            desc,
-            image,
-            bgColor: bgColor || "#121212"
-        };
-        simulatedAlbums.push(newAlbum);
-        res.json(newAlbum);
+        console.log("DB Error adding album:", error.message);
+        res.status(500).json({ msg: "Failed to add album to database", error: error.message });
     }
 };
 
 export const getAlbums = async (req, res) => {
     try {
         const albums = await prisma.album.findMany({ include: { songs: true } });
-        res.json([...albums, ...simulatedAlbums]);
+        res.json(albums);
     } catch (error) {
-        console.log("Database error fetching albums, returning simulated data.");
-        res.json(simulatedAlbums);
+        console.log("Database error fetching albums:", error.message);
+        res.status(500).json({ msg: "Failed to fetch albums" });
     }
 };

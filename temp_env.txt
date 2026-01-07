@@ -1,6 +1,0 @@
-DATABASE_URL="mongodb+srv://druc70609_db_user:chan123@music.krdmorp.mongodb.net/music?retryWrites=true&w=majority"
-JWT_SECRET="supersecret_musifyx_2026"
-PORT=5000
-CLOUDINARY_CLOUD_NAME="dzh2ja7qy"
-CLOUDINARY_API_KEY="823794773826884"
-CLOUDINARY_API_SECRET="P-D10p05vL4_S_v9W5iS8E6Fm6U"

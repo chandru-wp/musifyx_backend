@@ -12,6 +12,7 @@ import prisma from "./prisma.js";
 
 dotenv.config();
 const app = express();
+// Backend instance initialized
 
 (async () => {
   try {
@@ -37,12 +38,27 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/playlists", playlistRoutes);
 
+// Serve static files from uploads directory
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use((err, req, res, next) => {
   console.error("Global Error Handler:", err);
   res.status(500).json({ msg: "Internal Server Error", error: err.message });
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use. Please close other instances or use a different port.`);
+  } else {
+    console.error('❌ Server error:', err);
+  }
 });
