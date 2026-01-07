@@ -8,8 +8,19 @@ import uploadRoutes from "./routes/upload.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
 import playlistRoutes from "./routes/playlist.routes.js";
 
+import prisma from "./prisma.js";
+
 dotenv.config();
 const app = express();
+
+(async () => {
+  try {
+    await prisma.$connect();
+    console.log("✅ Database Connected Successfully");
+  } catch (err) {
+    console.error("❌ Database Connection Failed:", err.message);
+  }
+})();
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
