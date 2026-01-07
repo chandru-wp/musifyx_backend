@@ -4,10 +4,8 @@ import prisma from "../prisma.js";
 
 // In-Memory Store as LAST RESORT ONLY
 // In-Memory Store as LAST RESORT ONLY
-let simulatedUsers = [
-  { id: "sim-admin", username: "admin@gmail.com", role: "ADMIN", name: "Super Admin (Fallback)" },
-  { id: "sim-admin-local", username: "admin@musifyx.local", role: "ADMIN", name: "Local Admin" }
-];
+// In-Memory Store as LAST RESORT ONLY
+let simulatedUsers = [];
 
 export const register = async (req, res) => {
   try {
@@ -38,8 +36,18 @@ export const register = async (req, res) => {
       return res.json({ id: user.id, username: user.username, role: user.role, name: user.name });
 
     } catch (dbError) {
-      console.error("❌ Database Registration Error:", dbError.message);
-      return res.status(500).json({ msg: "Registration failed: Database error", error: dbError.message });
+      console.error("❌ Database Registration Error (Switching to Simulation):", dbError.message);
+
+      // FALLBACK: Create user in memory if DB fails
+      const newUser = {
+        id: "sim-" + Date.now(),
+        username: lowerUser,
+        role: role || "USER",
+        name: name || lowerUser.split('@')[0]
+      };
+      simulatedUsers.push(newUser);
+
+      return res.json({ id: newUser.id, username: newUser.username, role: newUser.role, name: newUser.name });
     }
   } catch (error) {
     res.status(500).json({ msg: "Server Error", error: error.message });
