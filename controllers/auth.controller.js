@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../prisma.js";
 
 // In-Memory Store for Simulation Mode (Persists while server is running)
 let simulatedUsers = [

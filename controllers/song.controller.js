@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../prisma.js";
 
 // In-Memory Store for Simulation Mode
 let simulatedSongs = [
@@ -23,7 +23,6 @@ let simulatedSongs = [
 ];
 
 export const getSongs = async (req, res) => {
-  const prisma = new PrismaClient();
   try {
     const songs = await prisma.song.findMany();
     // Merge real and simulated songs for a seamless experience
@@ -31,15 +30,11 @@ export const getSongs = async (req, res) => {
   } catch (error) {
     console.log("Database error fetching songs, returning simulated data.");
     res.json(simulatedSongs);
-  } finally {
-    await prisma.$disconnect();
   }
 };
 
 export const addSong = async (req, res) => {
-  const prisma = new PrismaClient();
-  const { title, artist, image, audioUrl } = req.body;
-
+  const { title, artist, image, audioUrl, albumId } = req.body;
   try {
     const song = await prisma.song.create({ data: req.body });
     res.json(song);
@@ -52,13 +47,11 @@ export const addSong = async (req, res) => {
       artist,
       image,
       audioUrl,
-      albumId: req.body.albumId || null,
+      albumId: albumId || null,
       duration: 0
     };
     simulatedSongs.push(newSong);
     res.json(newSong);
-  } finally {
-    await prisma.$disconnect();
   }
 };
 
@@ -72,14 +65,11 @@ export const deleteSong = async (req, res) => {
     return res.json({ msg: "Simulation Delete Successful" });
   }
 
-  const prisma = new PrismaClient();
   try {
     await prisma.song.delete({ where: { id } });
     res.json({ msg: "Deleted" });
   } catch (error) {
     res.status(500).json({ msg: "Failed to delete song", error: error.message });
-  } finally {
-    await prisma.$disconnect();
   }
 };
 
@@ -104,7 +94,6 @@ export const updateSong = async (req, res) => {
     return res.status(404).json({ msg: "Simulated song not found" });
   }
 
-  const prisma = new PrismaClient();
   try {
     const updatedSong = await prisma.song.update({
       where: { id },
@@ -113,7 +102,5 @@ export const updateSong = async (req, res) => {
     res.json(updatedSong);
   } catch (error) {
     res.status(500).json({ msg: "Failed to update song", error: error.message });
-  } finally {
-    await prisma.$disconnect();
   }
 };

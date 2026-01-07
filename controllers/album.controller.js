@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../prisma.js";
 
 // In-Memory Store for Simulation Mode
 let simulatedAlbums = [
@@ -7,7 +7,6 @@ let simulatedAlbums = [
 
 export const addAlbum = async (req, res) => {
     const { title, artist, desc, image, bgColor } = req.body;
-    const prisma = new PrismaClient();
 
     try {
         const album = await prisma.album.create({
@@ -26,20 +25,15 @@ export const addAlbum = async (req, res) => {
         };
         simulatedAlbums.push(newAlbum);
         res.json(newAlbum);
-    } finally {
-        await prisma.$disconnect();
     }
 };
 
 export const getAlbums = async (req, res) => {
-    const prisma = new PrismaClient();
     try {
         const albums = await prisma.album.findMany({ include: { songs: true } });
         res.json([...albums, ...simulatedAlbums]);
     } catch (error) {
         console.log("Database error fetching albums, returning simulated data.");
         res.json(simulatedAlbums);
-    } finally {
-        await prisma.$disconnect();
     }
 };
