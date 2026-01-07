@@ -5,6 +5,8 @@ import authRoutes from "./routes/auth.routes.js";
 import songRoutes from "./routes/song.routes.js";
 import albumRoutes from "./routes/album.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import analyticsRoutes from "./routes/analytics.routes.js";
+import playlistRoutes from "./routes/playlist.routes.js";
 
 dotenv.config();
 const app = express();
@@ -21,6 +23,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/playlists", playlistRoutes);
 
 app.use((err, req, res, next) => {
   console.error("Global Error Handler:", err);
