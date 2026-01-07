@@ -7,7 +7,7 @@ let simulatedSongs = [
     title: "Midnight City",
     artist: "M83",
     image: "https://placehold.co/300x300/1DB954/white?text=Music",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    audioUrl: "https://www.bensound.com/bensound-music/bensound-ukulele.mp3",
     albumId: null,
     duration: 240
   },
@@ -15,8 +15,8 @@ let simulatedSongs = [
     id: "sim-song-2",
     title: "Blinding Lights",
     artist: "The Weeknd",
-    image: "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    image: "https://placehold.co/300x300/1DB954/white?text=Blinding+Lights",
+    audioUrl: "https://www.bensound.com/bensound-music/bensound-creativeminds.mp3",
     albumId: null,
     duration: 200
   }
