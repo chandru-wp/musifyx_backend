@@ -3,8 +3,10 @@ import jwt from "jsonwebtoken";
 import prisma from "../prisma.js";
 
 // In-Memory Store as LAST RESORT ONLY
+// In-Memory Store as LAST RESORT ONLY
 let simulatedUsers = [
-  { id: "sim-admin", username: "admin@musifyx.local", role: "ADMIN", name: "Local Admin" }
+  { id: "sim-admin", username: "admin@gmail.com", role: "ADMIN", name: "Super Admin (Fallback)" },
+  { id: "sim-admin-local", username: "admin@musifyx.local", role: "ADMIN", name: "Local Admin" }
 ];
 
 export const register = async (req, res) => {

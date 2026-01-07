@@ -32,7 +32,7 @@ async function main() {
             title: "Top Hits 2026",
             artist: "Various Artists",
             desc: "The hottest tracks of the year",
-            image: "https://res.cloudinary.com/dzh2ja7qy/image/upload/v1767768565/ux7k6m0z6p7v4y2z5v5z.jpg",
+            image: "https://placehold.co/400x400/1DB954/white.png?text=Top+Hits",
             bgColor: "#1DB954"
         }
     });
@@ -43,8 +43,8 @@ async function main() {
         data: {
             title: "Midnight City",
             artist: "M83",
-            image: "https://res.cloudinary.com/dzh2ja7qy/image/upload/v1767768565/ux7k6m0z6p7v4y2z5v5z.jpg",
-            audioUrl: "https://res.cloudinary.com/dzh2ja7qy/video/upload/v1767768537/uj7z5m6z6p7v4y2z5v5z.mp3",
+            image: "https://placehold.co/400x400/purple/white.png?text=Midnight",
+            audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
             duration: 240,
             albumId: album.id
         }
@@ -54,8 +54,8 @@ async function main() {
         data: {
             title: "Starboy",
             artist: "The Weeknd",
-            image: "https://res.cloudinary.com/dzh2ja7qy/image/upload/v1767768565/ux7k6m0z6p7v4y2z5v5z.jpg",
-            audioUrl: "https://res.cloudinary.com/dzh2ja7qy/video/upload/v1767768537/uj7z5m6z6p7v4y2z5v5z.mp3",
+            image: "https://placehold.co/400x400/red/white.png?text=Starboy",
+            audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
             duration: 230,
             albumId: album.id
         }
